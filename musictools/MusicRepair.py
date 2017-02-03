@@ -23,23 +23,28 @@ class MusicRepair(object):
         song_name = improve_name(file_name)
 
         spotify = spotipy.Spotify()
-        results = spotify.search(song_name, limit=1)  # Find top result
+        results = spotify.search(song_name, limit=1)
         try:
-            album = (results['tracks']['items'][0]['album']
+            results = results['tracks']['items'][0]  # Find top result
+            album = (results['album']
                      ['name'])  # Parse json dictionary
-            artist = (results['tracks']['items'][0]['album']['artists'][0]['name'])
-            song_title = (results['tracks']['items'][0]['name'])
+            artist = (results['album']['artists'][0]['name'])
+            song_title = (results['name'])
+            albumart = (results['album']['images'][0]['url'])
 
-            return artist, album, song_title, ''
+            return artist, album, song_title, albumart, ''
 
 
         except Exception as error:
-            return ' ',' ', song_name, error
+            return ' ',' ', song_name, None, error
 
     @staticmethod
-    def add_albumart(file_name, song_title):
+    def add_albumart(file_name, song_title = None, albumart = None):
 
-        albumart = img_search_google(song_title)
+        if albumart is None:
+            albumart = img_search_google(song_title)
+        else:
+            pass
         try:
             img = urlopen(albumart)  # Gets album art from url
 
@@ -73,3 +78,4 @@ class MusicRepair(object):
         tags["artist"] = artist
         tags["album"] = album
         tags.save()
+
