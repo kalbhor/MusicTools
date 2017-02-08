@@ -1,21 +1,16 @@
 #!/usr/bin/env python
 
-"""
-  __  __           _      _   _
- |  \/  |_   _ ___(_) ___| \ | | _____      __
- | |\/| | | | / __| |/ __|  \| |/ _ \ \ /\ / /
- | |  | | |_| \__ \ | (__| |\  | (_) \ V  V /
- |_|  |_|\__,_|___/_|\___|_| \_|\___/ \_/\_/
-
-"""
-
-from bs4 import BeautifulSoup
 import requests
 import youtube_dl
-
 from collections import OrderedDict
+from bs4 import BeautifulSoup
+
 
 class MusicNow(object):
+    """
+    Fetch list of videos from youtube,
+    download audio from selected video
+    """
 
     YOUTUBECLASS = 'spf-prefetch'
 
@@ -24,18 +19,18 @@ class MusicNow(object):
 
     @staticmethod
     def get_url(song_input):
-
-        youtube_urls = []
-        youtube_titles = []
-        num = 0  # List of songs index
+        """
+        Gather all urls, titles for a search query
+        from youtube
+        """
 
         html = requests.get("https://www.youtube.com/results",
-		                    params={'search_query': song_input})
+                            params={'search_query': song_input})
         soup = BeautifulSoup(html.text, 'html.parser')
 
         youtube_list = OrderedDict()
 
-		# In all Youtube Search Results
+        # In all Youtube Search Results
 
         for i in soup.findAll('a', {'rel': MusicNow.YOUTUBECLASS}):
             song_url = 'https://www.youtube.com' + (i.get('href'))
@@ -46,19 +41,22 @@ class MusicNow(object):
 
     @staticmethod
     def download_song(song_url, song_title, location):
-	    outtmpl = song_title + '.%(ext)s'
-	    ydl_opts = {
-	        'format': 'bestaudio/best',
-	        'outtmpl': location+outtmpl,
-	        'postprocessors': [{
-	            'key': 'FFmpegExtractAudio',
-	            'preferredcodec': 'mp3',
-	            'preferredquality': '192',
-	        },
-	            {'key': 'FFmpegMetadata'},
-	        ],
+        """
+        Download a song using youtube url and song title
+        """
+        outtmpl = song_title + '.%(ext)s'
+        ydl_opts = {
+                'format': 'bestaudio/best',
+                'outtmpl': location + outtmpl,
+                'postprocessors': [{
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'mp3',
+                    'preferredquality': '192',
+                },
+                    {'key': 'FFmpegMetadata'},
+                ],
 
-	    }
+            }
 
-	    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-	        info_dict = ydl.extract_info(song_url, download=True)
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            info_dict = ydl.extract_info(song_url, download=True)

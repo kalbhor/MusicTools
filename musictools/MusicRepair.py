@@ -1,26 +1,29 @@
-from bs4 import BeautifulSoup
-import requests
 
+import requests
+import spotipy
 from mutagen.id3 import ID3, APIC, _util
 from mutagen.mp3 import EasyMP3
-import spotipy
+from bs4 import BeautifulSoup
 from urllib.request import urlopen
-
 from .improve import improve_name, img_search_google
 
+
 class MusicRepair(object):
+    """
+    Adds album art, album name, title, artist,etc
+    to a .mp3 file
+    """
 
     def __init__(self):
         pass
 
-
     @staticmethod
     def get_details_spotify(file_name):
-        '''
+        """
         Tries finding metadata through Spotify
-        '''
+        """
 
-        song_name = improve_name(file_name)
+        song_name = improve_name(file_name)  # Remove useless words from title
 
         spotify = spotipy.Spotify()
         results = spotify.search(song_name, limit=1)
@@ -34,12 +37,14 @@ class MusicRepair(object):
 
             return artist, album, song_title, albumart, ''
 
-
         except Exception as error:
-            return ' ',' ', song_name, None, error
+            return ' ', ' ', song_name, None, error
 
     @staticmethod
-    def add_albumart(file_name, song_title = None, albumart = None):
+    def add_albumart(file_name, song_title=None, albumart=None):
+        """
+        Add albumart in .mp3's tags
+        """
 
         if albumart is None:
             albumart = img_search_google(song_title)
@@ -70,12 +75,13 @@ class MusicRepair(object):
 
         return albumart
 
-
     @staticmethod
     def add_details(file_name, title, artist, album):
+        """
+        As the method name suggests
+        """
         tags = EasyMP3(file_name)
         tags["title"] = title
         tags["artist"] = artist
         tags["album"] = album
         tags.save()
-
