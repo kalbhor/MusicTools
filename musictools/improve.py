@@ -37,6 +37,7 @@ def improve_name(song_name):
 
     # Remove duplicate spaces
     song_name = re.sub(' +', ' ', song_name)
+
     return song_name.strip()
 
 
@@ -51,7 +52,7 @@ def img_search_google(album):
            quote(album.encode('utf-8')) + "&source=lnms&tbm=isch")
     header = {'User-Agent':
               'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML,like Gecko) Chrome/43.0.2357.134 Safari/537.36'
-              }
+             }
 
     response = requests.get(url, headers=header)
 

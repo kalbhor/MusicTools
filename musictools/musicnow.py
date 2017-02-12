@@ -28,14 +28,14 @@ class MusicNow(object):
                             params={'search_query': song_input})
         soup = BeautifulSoup(html.text, 'html.parser')
 
-        youtube_list = OrderedDict()
+        soup_section = soup.findAll('a', {'rel': MusicNow.YOUTUBECLASS})
 
-        # In all Youtube Search Results
+        # Use generator over list, since storage isn't important
+        song_urls = ('https://www.youtube.com' + i.get('href')
+                     for i in soup_section)
+        song_titles = (i.get('title') for i in soup_section)
 
-        for i in soup.findAll('a', {'rel': MusicNow.YOUTUBECLASS}):
-            song_url = 'https://www.youtube.com' + (i.get('href'))
-            song_title = (i.get('title'))
-            youtube_list.update({song_title: song_url})
+        youtube_list = list(zip(song_urls, song_titles))
 
         return youtube_list
 
@@ -46,17 +46,17 @@ class MusicNow(object):
         """
         outtmpl = song_title + '.%(ext)s'
         ydl_opts = {
-                'format': 'bestaudio/best',
-                'outtmpl': location + outtmpl,
-                'postprocessors': [{
-                    'key': 'FFmpegExtractAudio',
-                    'preferredcodec': 'mp3',
-                    'preferredquality': '192',
-                },
-                    {'key': 'FFmpegMetadata'},
-                ],
+            'format': 'bestaudio/best',
+            'outtmpl': location + outtmpl,
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            },
+                {'key': 'FFmpegMetadata'},
+            ],
 
-            }
+        }
 
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(song_url, download=True)
