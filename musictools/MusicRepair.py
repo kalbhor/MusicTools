@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 
 import requests
 import spotipy
@@ -45,18 +46,11 @@ class MusicRepair(object):
         """
         Add albumart in .mp3's tags
         """
+        albumart = [img_search_google(song_title) if albumart is None]
 
-        if albumart is None:
-            albumart = img_search_google(song_title)
-        else:
-            pass
-        try:
-            img = urlopen(albumart)  # Gets album art from url
-
-        except Exception:
-            return None
-
+        img = urlopen(albumart)  # Gets album art from url
         audio = EasyMP3(file_name, ID3=ID3)
+
         try:
             audio.add_tags()
         except _util.error:
@@ -85,3 +79,4 @@ class MusicRepair(object):
         tags["artist"] = artist
         tags["album"] = album
         tags.save()
+

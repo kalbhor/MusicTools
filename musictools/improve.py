@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import requests
 import json
 import re
@@ -62,3 +64,4 @@ def img_search_google(album):
     albumart = json.loads(albumart_div.text)["ou"]
 
     return albumart
+
