@@ -1,15 +1,17 @@
 #!/usr/bin/env python
 
 import requests
+import youtube_dl
 import spotipy
 from mutagen.id3 import ID3, APIC, _util
 from mutagen.mp3 import EasyMP3
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from .improve import improve_name, img_search_google
+from collections import OrderedDict
 
 
-class MusicRepair(object):
+class MusicTools(object):
     """
     Adds album art, album name, title, artist,etc
     to a .mp3 file
@@ -19,7 +21,7 @@ class MusicRepair(object):
         pass
 
     @staticmethod
-    def get_details_spotify(file_name):
+    def get_details(file_name):
         """
         Tries finding metadata through Spotify
         """
@@ -79,4 +81,50 @@ class MusicRepair(object):
         tags["artist"] = artist
         tags["album"] = album
         tags.save()
+
+
+    @staticmethod
+    def get_song_url(song_input):
+        """
+        Gather all urls, titles for a search query
+        from youtube
+        """
+        YOUTUBECLASS = 'spf-prefetch'
+
+        html = requests.get("https://www.youtube.com/results",
+                            params={'search_query': song_input})
+        soup = BeautifulSoup(html.text, 'html.parser')
+
+        soup_section = soup.findAll('a', {'rel': MusicNow.YOUTUBECLASS})
+
+        # Use generator over list, since storage isn't important
+        song_urls = ('https://www.youtube.com' + i.get('href')
+                     for i in soup_section)
+        song_titles = (i.get('title') for i in soup_section)
+
+        youtube_list = list(zip(song_urls, song_titles))
+
+        return youtube_list
+
+    @staticmethod
+    def download_song(song_url, song_title, location):
+        """
+        Download a song using youtube url and song title
+        """
+        outtmpl = song_title + '.%(ext)s'
+        ydl_opts = {
+            'format': 'bestaudio/best',
+            'outtmpl': location + outtmpl,
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            },
+                {'key': 'FFmpegMetadata'},
+            ],
+
+        }
+
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            info_dict = ydl.extract_info(song_url, download=True)
 
