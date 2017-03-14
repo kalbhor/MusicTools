@@ -13,6 +13,24 @@
 [![GitHub followers](https://img.shields.io/github/followers/lakshaykalbhor.svg?style=social&label=Follow)](https://github.com/lakshaykalbhor)  
 [![Twitter Follow](https://img.shields.io/twitter/follow/lakshaykalbhor.svg?style=social)](https://twitter.com/lakshaykalbhor)
 
+
+## Dependencies 
+
+### Mac
+
+```sh
+$ brew install libav
+```
+
+### Ubuntu
+```sh
+$ sudo apt-get install libav-tools
+```
+
+### Windows
+[Install libav](https://github.com/NixOS/nixpkgs/issues/5236)
+
+
 ## Installing
 
 #### From Source:
