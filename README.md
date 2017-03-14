@@ -1,6 +1,14 @@
 <h2> M U S I C &nbsp; T O O L S </h2>
+[![Build Status](https://travis-ci.org/lakshaykalbhor/MusicTools.svg?branch=master)](https://travis-ci.org/lakshaykalbhor/MusicTools)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](LICENSE)
+
 #### Library to download, sort and tag music files
 
+## Social:
+
+[![GitHub stars](https://img.shields.io/github/stars/lakshaykalbhor/musictools.svg?style=social&label=Star)](https://github.com/lakshaykalbhor/musictools)
+[![GitHub followers](https://img.shields.io/github/followers/lakshaykalbhor.svg?style=social&label=Follow)](https://github.com/lakshaykalbhor)  
+[![Twitter Follow](https://img.shields.io/twitter/follow/lakshaykalbhor.svg?style=social)](https://twitter.com/lakshaykalbhor)
 
 ## Installing
 
