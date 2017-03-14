@@ -4,8 +4,9 @@ python:
   - "3.6"
 # command to install dependencies
 before_install:
-- "sudo apt-get install libav-tools"
+- "sudo apt-get install libavcodec-extra-53"
 - "sudo apt-get install ffmpeg"
+- "sudo apt-get install ffprobe"
 install: 
 - "pip install -r requirements.txt"
 # command to run tests
