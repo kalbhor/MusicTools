@@ -3,12 +3,13 @@
 import requests
 import youtube_dl
 import spotipy
+import os
 from mutagen.id3 import ID3, APIC, _util
 from mutagen.mp3 import EasyMP3
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from .improve import improve_name, img_search_google
-from collections import OrderedDict
+
 
 def get_song_urls(song_input):
     """
@@ -41,11 +42,14 @@ def download_song(song_url, song_title, dl_directory='./'):
     Download a song using youtube url and song title
     """
     global location
+
+    dl_directory = os.path.abspath(os.path.expanduser(dl_directory))
+
     location = dl_directory
     outtmpl = song_title + '.%(ext)s'
     ydl_opts = {
         'format': 'bestaudio/best',
-        'outtmpl': location + outtmpl,
+        'outtmpl': os.path.join(location, outtmpl),
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
@@ -84,14 +88,14 @@ def get_metadata(file_name):
         return 'Unknown', 'Unknown', song_name, None
 
 
-def add_albumart(file_name, song_title=None, albumart=None):
+def add_albumart(file_name, albumart=None):
     """
     Add albumart in .mp3's tags
     """
-    file_name = location + file_name
+    file_name = os.path.abspath(os.path.join(location, file_name + '.mp3'))
 
     if albumart is None:
-        albumart = img_search_google(song_title)
+        albumart = img_search_google(file_name)
 
     img = urlopen(albumart)  # Gets album art from url
     audio = EasyMP3(file_name, ID3=ID3)
@@ -119,10 +123,12 @@ def add_metadata(file_name, title, artist, album):
     """
     As the method name suggests
     """
-    file_name = location + file_name
+    file_name = os.path.abspath(os.path.join(location, file_name + '.mp3'))
     
     tags = EasyMP3(file_name)
     tags["title"] = title
     tags["artist"] = artist
     tags["album"] = album
     tags.save()
+
+    return file_name
