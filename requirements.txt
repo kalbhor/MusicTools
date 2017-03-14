@@ -1,0 +1,13 @@
+appdirs==1.4.3
+beautifulsoup4==4.5.3
+bs4==0.0.1
+musictools==2.0.1
+mutagen==1.37
+packaging==16.8
+py==1.4.32
+pyparsing==2.2.0
+pytest==3.0.6
+requests==2.13.0
+six==1.10.0
+spotipy==2.4.4
+youtube-dl==2017.3.10
