@@ -1,7 +1,7 @@
 appdirs==1.4.3
 beautifulsoup4==4.5.3
 bs4==0.0.1
-musictools==2.0.1
+musictools==2.0.2
 mutagen==1.37
 packaging==16.8
 py==1.4.32
