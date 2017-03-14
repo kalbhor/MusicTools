@@ -3,7 +3,10 @@ language: python
 python:
   - "3.6"
 # command to install dependencies
-install: "pip install -r requirements.txt"
+before_install:
+ - "sudo apt-get install libav-tools"
+install: 
+- "pip install -r requirements.txt"
 # command to run tests
 script: 
 - python -m pytest tests/musictools_tests.py
