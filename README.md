@@ -2,6 +2,9 @@
 [![Build Status](https://travis-ci.org/lakshaykalbhor/MusicTools.svg?branch=master)](https://travis-ci.org/lakshaykalbhor/MusicTools)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](LICENSE)
 
+
+[![banner](http://i63.tinypic.com/2qc2dk2.jpg)]()
+
 #### Library to download, sort and tag music files
 
 ## Social:
