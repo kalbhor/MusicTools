@@ -79,7 +79,9 @@ The Beatles - Hey Jude
 >>> musictools.add_albumart(title, albumart)
 >>> musictools.add_metadata(title, song_name, artist, album)
 
+✨
 ```
+
 
 
 
