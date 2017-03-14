@@ -45,7 +45,7 @@ musictools.get_metadata(file_name)
 
 ##### Adds an image as the album art of a mp3 file
 ```
-musictools.add_albumart(file_name, song_title, albumart)
+musictools.add_albumart(file_name, albumart)
 ```
 
 ##### Adds title, artist and album name in a mp3 file
@@ -76,7 +76,7 @@ The Beatles - Hey Jude
 
 >>> artist, album , song_name, albumart = musictools.get_metadata(title)
 
->>> musictools.add_albumart(title, song_name, albumart)
+>>> musictools.add_albumart(title, albumart)
 >>> musictools.add_metadata(title, song_name, artist, album)
 
 ```
