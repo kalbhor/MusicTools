@@ -1,9 +1,7 @@
-<h2> M U S I C &nbsp; T O O L S </h2>
+[![banner](http://i63.tinypic.com/2qc2dk2.jpg)]()
 
 [![PyPI version](https://badge.fury.io/py/musictools.svg)](https://badge.fury.io/py/musictools)
 [![Build Status](https://travis-ci.org/lakshaykalbhor/MusicTools.svg?branch=master)](https://travis-ci.org/lakshaykalbhor/MusicTools)
-
-[![banner](http://i63.tinypic.com/2qc2dk2.jpg)]()
 
 #### Library to download, sort and tag music files
 
