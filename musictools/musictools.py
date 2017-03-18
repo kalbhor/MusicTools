@@ -1,14 +1,50 @@
 #!/usr/bin/env python
 
+import os
+import json
+import re
 import requests
 import youtube_dl
 import spotipy
-import os
+from os.path import splitext
 from mutagen.id3 import ID3, APIC, _util
 from mutagen.mp3 import EasyMP3
 from bs4 import BeautifulSoup
-from urllib.request import urlopen
-from .improve import improve_name, img_search_google
+
+
+def improve_name(song_name):
+    """
+    Improves file name by removing words such as HD, Official,etc
+    eg : Hey Jude (Official HD) lyrics -> Hey Jude
+
+    This helps in better searching of metadata since a spotify search of
+    'Hey Jude (Official HD) lyrics' fetches 0 results
+    """
+
+    try:
+        song_name = splitext(song_name)[0]
+    except IndexError:
+        pass
+
+    song_name = song_name.partition('ft')[0]
+
+    # Words to omit from song title for better results through spotify's API
+    chars_filter = "()[]{}-:_/=+\"\'"
+    words_filter = ('official', 'lyrics', 'audio', 'remixed', 'remix', 'video',
+                    'full', 'version', 'music', 'mp3', 'hd', 'hq', 'uploaded', 'explicit')
+
+    # Replace characters to filter with spaces
+    song_name = ''.join(
+        map(lambda c: " " if c in chars_filter else c, song_name))
+
+    # Remove crap words
+    song_name = re.sub('|'.join(re.escape(key) for key in words_filter),
+                       "", song_name, flags=re.IGNORECASE)
+
+    # Remove duplicate spaces
+    song_name = re.sub(' +', ' ', song_name)
+
+    return song_name.strip()
 
 
 def get_song_urls(song_input):
@@ -88,16 +124,13 @@ def get_metadata(file_name):
         return 'Unknown', 'Unknown', song_name, None
 
 
-def add_albumart(file_name, albumart=None):
+def add_albumart(file_name, albumart):
     """
     Add albumart in .mp3's tags
     """
     file_name = os.path.abspath(os.path.join(location, file_name + '.mp3'))
 
-    if albumart is None:
-        albumart = img_search_google(file_name)
-
-    img = urlopen(albumart)  # Gets album art from url
+    img = requests.get(albumart, stream=True)  # Gets album art from url
     audio = EasyMP3(file_name, ID3=ID3)
 
     try:
@@ -111,7 +144,7 @@ def add_albumart(file_name, albumart=None):
             mime='image/png',
             type=3,  # 3 is for album art
             desc='Cover',
-            data=img.read()  # Reads and adds album art
+            data=img.content # Reads and adds album art
         )
     )
     audio.save()
