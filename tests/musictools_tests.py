@@ -19,13 +19,13 @@ def test_get_metadata():
 
 def test_download_song():
 
-    musictools.download_song(url, file_name, dl_directory='./temp')
+    musictools.download_song(url, 'temp/'+file_name)
     
     assert os.path.exists(location) == True
 
 def test_add_albumart():
 
-    musictools.add_albumart(file_name, albumart)
+    musictools.add_albumart(location, albumart)
     tags = File(location)
  
     assert 'APIC:Cover' in tags.keys() != None
