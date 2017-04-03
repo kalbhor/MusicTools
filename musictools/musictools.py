@@ -112,7 +112,6 @@ def get_metadata(file_name):
         return artist, album, song_title, albumart
 
     except Exception as error:
-        print(error)
         return 'Unknown', 'Unknown', song_name, None
 
 
