@@ -156,7 +156,7 @@ def add_metadata(file_name, title, artist, album):
     return file_name
 
 
-def revert_music(files):
+def revert_metadata(files):
     """
     Removes all tags from a mp3 file
     """

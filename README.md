@@ -52,9 +52,9 @@ $ pip install musictools
 musictools.get_song_urls(song_name)
 ```
 
-##### Download song from youtube, optionally provide directory to download to.
+##### Download song from youtube
 ```
-musictools.download_song(song_url, song_title, dl_directory)
+musictools.download_song(song_url, song_title)
 ```
 
 ##### Provides artist name, song name, album name and album art for a particular song
@@ -72,6 +72,13 @@ musictools.add_albumart(file_name, albumart)
 ```
 musictools.add_metadata(file_name, title, artist, album)
 ```
+
+##### Removes all metadata and album art from songs
+
+```
+musictools.revert_metadata(file_name)
+```
+
 
 ## Example
 ```sh
