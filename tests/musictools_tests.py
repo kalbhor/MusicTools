@@ -23,9 +23,9 @@ def test_download_song():
     
     assert os.path.exists(location) == True
 
-def test_add_albumart():
+def test_add_album_art():
 
-    musictools.add_albumart(location, albumart)
+    musictools.add_album_art(location, albumart)
     tags = File(location)
  
     assert 'APIC:Cover' in tags.keys() != None

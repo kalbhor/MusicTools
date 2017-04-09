@@ -8,7 +8,11 @@ import re
 from mutagen.id3 import ID3, APIC, _util
 from mutagen.mp3 import EasyMP3
 from bs4 import BeautifulSoup
-from urllib.request import urlopen
+
+# Words to omit from song title for better results through spotify's API
+chars_filter = "()[]{}-:_/=+\"\'"
+words_filter = ('official', 'lyrics', 'audio', 'remixed', 'remix', 'video',
+                'full', 'version', 'music', 'mp3', 'hd', 'hq', 'uploaded', 'explicit')
 
 def improve_name(song_name):
     """
@@ -24,11 +28,6 @@ def improve_name(song_name):
         pass
 
     song_name = song_name.partition('ft')[0]
-
-    # Words to omit from song title for better results through spotify's API
-    chars_filter = "()[]{}-:_/=+\"\'"
-    words_filter = ('official', 'lyrics', 'audio', 'remixed', 'remix', 'video',
-                    'full', 'version', 'music', 'mp3', 'hd', 'hq', 'uploaded', 'explicit')
 
     # Replace characters to filter with spaces
     song_name = ''.join(
@@ -78,14 +77,12 @@ def download_song(song_url, song_title):
     ydl_opts = {
         'format': 'bestaudio/best',
         'outtmpl': outtmpl,
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192',
-        },
+        'postprocessors': [
+            {'key': 'FFmpegExtractAudio','preferredcodec': 'mp3',
+             'preferredquality': '192',
+            },
             {'key': 'FFmpegMetadata'},
         ],
-
     }
 
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
@@ -101,26 +98,25 @@ def get_metadata(file_name):
 
     spotify = spotipy.Spotify()
     results = spotify.search(song_name, limit=1)
-    try:
-        results = results['tracks']['items'][0]  # Find top result
-        album = (results['album']
-                 ['name'])  # Parse json dictionary
-        artist = (results['album']['artists'][0]['name'])
-        song_title = (results['name'])
-        albumart = (results['album']['images'][0]['url'])
 
-        return artist, album, song_title, albumart
+    results = results['tracks']['items'][0]  # Find top result
+    album = results['album']['name']  # Parse json dictionary
+    artist = results['album']['artists'][0]['name']
+    song_title = results['name']
+    album_art = results['album']['images'][0]['url']
 
-    except Exception as error:
-        return 'Unknown', 'Unknown', song_name, None
+    return artist, album, song_title, album_art
 
 
-def add_albumart(file_name, albumart):
+
+def add_album_art(file_name, album_art):
     """
-    Add albumart in .mp3's tags
+    Add album_art in .mp3's tags
     """
 
-    img = urlopen(albumart)  # Gets album art from url
+    img = requests.get(album_art, stream=True)  # Gets album art from url
+    img = img.raw
+
     audio = EasyMP3(file_name, ID3=ID3)
 
     try:
@@ -139,7 +135,7 @@ def add_albumart(file_name, albumart):
     )
     audio.save()
 
-    return albumart
+    return album_art
 
 
 def add_metadata(file_name, title, artist, album):
