@@ -5,7 +5,7 @@
 
 #### Library to download, sort and tag music files
 
-## Social:
+## Social
 
 [![GitHub stars](https://img.shields.io/github/stars/lakshaykalbhor/musictools.svg?style=social&label=Star)](https://github.com/lakshaykalbhor/musictools)
 [![GitHub followers](https://img.shields.io/github/followers/lakshaykalbhor.svg?style=social&label=Follow)](https://github.com/lakshaykalbhor)  
