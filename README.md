@@ -1,14 +1,14 @@
 [![banner](http://i63.tinypic.com/2qc2dk2.jpg)]()
 
 [![PyPI version](https://badge.fury.io/py/musictools.svg)](https://badge.fury.io/py/musictools)
-[![Build Status](https://travis-ci.org/lakshaykalbhor/MusicTools.svg?branch=master)](https://travis-ci.org/lakshaykalbhor/MusicTools)
+[![Build Status](https://travis-ci.org/kalbhor/MusicTools.svg?branch=master)](https://travis-ci.org/kalbhor/MusicTools)
 
 #### Library to download, sort and tag music files
 
 ## Social
 
-[![GitHub stars](https://img.shields.io/github/stars/lakshaykalbhor/musictools.svg?style=social&label=Star)](https://github.com/lakshaykalbhor/musictools)
-[![GitHub followers](https://img.shields.io/github/followers/lakshaykalbhor.svg?style=social&label=Follow)](https://github.com/lakshaykalbhor)  
+[![GitHub stars](https://img.shields.io/github/stars/kalbhor/musictools.svg?style=social&label=Star)](https://github.com/kalbhor/musictools)
+[![GitHub followers](https://img.shields.io/github/followers/kalbhor.svg?style=social&label=Follow)](https://github.com/kalbhor)  
 [![Twitter Follow](https://img.shields.io/twitter/follow/lakshaykalbhor.svg?style=social)](https://twitter.com/lakshaykalbhor)
 
 
@@ -34,7 +34,7 @@ $ sudo apt-get install libav-tools
 #### From Source:
 
 ```sh
-$ git clone https://github.com/lakshaykalbhor/MusicTools
+$ git clone https://github.com/kalbhor/MusicTools
 $ cd MusicTools
 $ python setup.py install
 ```
@@ -105,16 +105,15 @@ The Beatles - Hey Jude
 >>> musictools.add_albumart(title, albumart)
 >>> musictools.add_metadata(title, song_name, artist, album)
 
-✨
+✨✨VOILA✨✨
 ```
 [![image](image.png)]()
 
 
 
 ## Contributing
-Currently this project is in its infancy and issues are bound to arise.
-To contribute, [post issues](https://github.com/lakshaykalbhor/MusicTools/issues) without hesitation and [open pull requests](https://github.com/lakshaykalbhor/MusicTools/pulls) to add/improve features.
+To contribute, [post issues](https://github.com/kalbhor/MusicTools/issues) without hesitation and [open pull requests](https://github.com/kalbhor/MusicTools/pulls) to add/improve features.
 
 ## License 
-#### [MIT](https://github.com/lakshaykalbhor/MusicTools/blob/master/LICENSE)
+#### [MIT](https://github.com/kalbhor/MusicTools/blob/master/LICENSE)
 
