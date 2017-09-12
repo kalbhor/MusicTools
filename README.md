@@ -79,12 +79,6 @@ musictools.add_metadata(file_name, title, artist, album)
 musictools.revert_metadata(file_name)
 ```
 
-##### Returns specified metadata field for a music file
-
-```
-musictools.get_current_metadata_tag(file_name, tag)
-```
-
 
 ## Example
 ```sh
