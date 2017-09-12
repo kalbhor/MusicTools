@@ -57,9 +57,9 @@ musictools.get_song_urls(song_name)
 musictools.download_song(song_url, song_title)
 ```
 
-##### Provides artist name, song name, album name and album art for a particular song
+##### Provides artist name, song name, album name and album art for a particular song. Requires Client ID and Client Secret for Spotify API
 ```
-musictools.get_metadata(file_name) 
+musictools.get_metadata(file_name, client_id, client_secret)
 ```
 
 ##### Adds an image as the album art of a mp3 file
@@ -100,7 +100,7 @@ The Beatles - Hey Jude
 >>> musictools.get_metadata(title)
 ('The Beatles', '1 (Remastered)', 'Hey Jude - Remastered 2015', 'https://i.scdn.co/image/9ecfdf528562cae879748b73bd81b64dfa3d5704')
 
->>> artist, album , song_name, albumart = musictools.get_metadata(title)
+>>> artist, album , song_name, albumart = musictools.get_metadata(title, 'YOUR_CLIENT_ID', 'YOUR_CLIENT_SECRET')
 
 >>> musictools.add_albumart(title, albumart)
 >>> musictools.add_metadata(title, song_name, artist, album)
