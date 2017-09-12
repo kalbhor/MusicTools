@@ -8,6 +8,7 @@ import re
 from mutagen.id3 import ID3, APIC, _util
 from mutagen.mp3 import EasyMP3
 from bs4 import BeautifulSoup
+from spotipy.oauth2 import SpotifyClientCredentials
 
 # Words to omit from song title for better results through spotify's API
 chars_filter = "()[]{}-:_/=+\"\'"
@@ -89,14 +90,15 @@ def download_song(song_url, song_title):
         info_dict = ydl.extract_info(song_url, download=True)
 
 
-def get_metadata(file_name):
+def get_metadata(file_name, client_id, client_secret):
     """
     Tries finding metadata through Spotify
     """
 
     song_name = improve_name(file_name)  # Remove useless words from title
+    client_credentials_manager = SpotifyClientCredentials(client_id, client_secret)
 
-    spotify = spotipy.Spotify()
+    spotify = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
     results = spotify.search(song_name, limit=1)
 
     results = results['tracks']['items'][0]  # Find top result
@@ -106,7 +108,6 @@ def get_metadata(file_name):
     album_art = results['album']['images'][0]['url']
 
     return artist, album, song_title, album_art
-
 
 
 def add_album_art(file_name, album_art):
