@@ -145,12 +145,22 @@ def add_metadata(file_name, title, artist, album):
     """
     
     tags = EasyMP3(file_name)
-    tags["title"] = title
-    tags["artist"] = artist
-    tags["album"] = album
+    if title: 
+        tags["title"] = title
+    if artist:     
+        tags["artist"] = artist
+    if album:
+        tags["album"] = album
     tags.save()
 
     return file_name
+
+def get_current_metadata_tag(file_name, tag):
+    tags = EasyMP3(file_name)
+    if tag in tags:
+        return tags[tag].pop()
+    else:
+        return "The metadata tag could not be found."
 
 
 def revert_metadata(files):
