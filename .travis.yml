@@ -1,13 +1,13 @@
 sudo: true
 language: python
 python:
-  - "3.6"
-# command to install dependencies
+- '3.6'
 before_install:
-- "sudo apt-get install libavcodec-extra-53"
-- "sudo apt-get install ffmpeg"
-install: 
-- "pip install -r requirements.txt"
-# command to run tests
-script: 
+- sudo apt-get install libav-tools
+install:
+- pip install -r requirements.txt
+script:
 - python -m pytest tests/musictools_tests.py
+env:
+  matrix:
+    secure: o+3tMestD6NoOjp24v4lhZI1i+Ou36+HDCBAJR0arQTDI1OIQr6dPqTng/5m/q2Ysfg87h9v7ZkbmwSfz5X+ubzyWur4lWhPXfrR+PxMh3E6qWR2nr07mE49YOeh0QvtygNddPissiisqeggiIDdXR6lLy3Up8/5UsWL3I+PjGXG/tTKbcQfET1g6Wx0IHRoktM40wrhIoLfb6jGmd6s394bfPZx5M0MS4qus3/pGu4E5ROjNWgdWYGZNu0PnPaRz+rir0srpstE8dZbgZTKk+OxJYl8cwxRwpjPn1uJvTSMw1YfGXFZwRLojJroGGeT8OQ89U8+rAF55HCwIwMQP0izBPn8Zl4TWzAXL4kr9le0vAU02Uu2bonDQSg4rELEMM/x6qI5lHLS7O07rei+mRx60CM8S/tJMKlz8DD/LkjsF9+9VP03lZjKp2ZY/8S58ckGituuPPyjcetfjCYHrQ33IvL6IXTgznkj+33ULzEVgT0bbMVEdottxgUUpN7sTa4AqYMcTmsZv+Lh2bRxPZpY1qHaWOivX54hs7jdVV6z8tuQ3aXEvuG7ehwPvX5r6NVD092iXye9jfZoUVEePOCJMcBm/3ldjzsxjdk7eR8CANBPb5qM3IkivofN8Wu/CRomGk5yAAnbeNnqLzWKmjT99vXrFUN/McYt71rnCr4=

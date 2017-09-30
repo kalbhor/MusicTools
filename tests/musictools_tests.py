@@ -3,9 +3,11 @@ from mutagen import File
 import pytest
 import os
 
+client_id = os.environ["SPOTIFY_CLIENT_ID"]
+client_secret = os.environ["SPOTIFY_CLIENT_SECRET"]
 songs_list = musictools.get_song_urls("Hey Jude")
 url, file_name = songs_list[0]
-artist, album, song_title, albumart = musictools.get_metadata("Hey Jude")
+artist, album, song_title, albumart = musictools.get_metadata("Hey Jude", client_id, client_secret)
 location = os.path.join('temp', file_name + '.mp3')
 
 def test_get_song_urls():
