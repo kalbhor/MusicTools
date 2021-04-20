@@ -7,7 +7,7 @@ idna==2.6
 musictools==2.2.0
 mutagen==1.38
 packaging==16.8
-py==1.4.32
+py==1.10.0
 pyparsing==2.2.0
 pytest==3.0.6
 requests==2.18.4
