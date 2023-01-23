@@ -12,6 +12,6 @@ pyparsing==2.2.0
 pytest==3.0.6
 requests==2.20.0
 six==1.10.0
-spotipy==2.4.4
+spotipy==2.22.1
 urllib3==1.26.5
 youtube-dl==2017.9.24
